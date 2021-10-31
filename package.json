@@ -1,6 +1,6 @@
 {
   "name": "codecracker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "CLI codecracker game",
   "scripts": {
     "build": "tsc",
@@ -10,7 +10,8 @@
     "codecracker": "./build/cli.js"
   },
   "files": [
-    "build/**/*.js"
+    "build/**/*.js",
+    "README"
   ],
   "author": "Manohar Prabhu",
   "license": "MIT",
