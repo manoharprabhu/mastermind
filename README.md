@@ -6,6 +6,8 @@
   \____\___/|____/|_____\____|_| \_\/_/   \_\____|_|\_\_____|_| \_\
 ```                                                                
 
+A codecracker game where you try to guess your locked phone's PIN
+
 
 ```
 npm install -g codecracker
