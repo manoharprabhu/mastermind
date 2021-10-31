@@ -1,17 +1,18 @@
 {
   "name": "codecracker",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CLI codecracker game",
   "scripts": {
     "build": "tsc",
-    "run": "npm run build && node build/cli.js"
+    "run": "npm run build && node build/cli.js",
+    "publish:ci": "npm run build && npm publish"
   },
   "bin": {
     "codecracker": "./build/cli.js"
   },
   "files": [
     "build/**/*.js",
-    "README"
+    "README.md"
   ],
   "author": "Manohar Prabhu",
   "license": "MIT",
