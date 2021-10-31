@@ -1,6 +1,6 @@
 {
   "name": "codecracker",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "CLI codecracker game",
   "scripts": {
     "build": "tsc",
