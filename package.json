@@ -1,14 +1,13 @@
 {
-  "name": "mastermind-cli",
-  "version": "1.0.0",
-  "description": "CLI mastermind game",
+  "name": "codecracker",
+  "version": "0.0.1",
+  "description": "CLI codecracker game",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "run": "npm run build && node build/cli.js"
   },
   "bin": {
-    "mastermind": "./build/cli.js"
+    "codecracker": "./build/cli.js"
   },
   "files": [
     "build/**/*.js"
@@ -16,11 +15,17 @@
   "author": "Manohar Prabhu",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "^16.11.6",
     "chalk": "^4.1.2",
-    "typescript": "^4.4.4"
+    "table": "^6.7.2"
   },
   "devDependencies": {
-    "table": "^6.7.2"
-  }
+    "@types/node": "^16.11.6",
+    "typescript": "^4.4.4"
+  },
+  "keywords": [
+    "cli",
+    "mastermind",
+    "codecracker"
+  ],
+  "preferGlobal": true
 }
