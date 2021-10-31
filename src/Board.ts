@@ -98,8 +98,10 @@ export default class Board {
         for (let i = 0; i < 4; i++) {
             // match white
             if (guess.charAt(i) !== actual.charAt(i)) {
-                if (!matchedSet.has(guess.charAt(i)) && actual.indexOf(guess.charAt(i)) !== -1)
+                if (!matchedSet.has(guess.charAt(i)) && actual.indexOf(guess.charAt(i)) !== -1) {
                     correctColor++
+                    matchedSet.add(guess.charAt(i))
+                }
             }
         }
 
