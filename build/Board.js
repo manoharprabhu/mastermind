@@ -7,8 +7,8 @@ const chalk_1 = __importDefault(require("chalk"));
 const table_1 = require("table");
 class Board {
     constructor(pin) {
-        this.rightDigitWrongPosition = chalk_1.default.blue("●"); // right digit wrong position
-        this.rightDigitRightPosition = chalk_1.default.green("●"); // right position
+        this.rightDigitWrongPosition = chalk_1.default.blueBright("●"); // right digit wrong position
+        this.rightDigitRightPosition = chalk_1.default.greenBright("●"); // right position
         this.wrongPosition = chalk_1.default.grey("●"); // no match
         this.header = `
     ${this.rightDigitWrongPosition} - Correct guess, wrong position

@@ -3,9 +3,9 @@ import { table } from 'table'
 
 export default class Board {
     private pin: string
-    private readonly rightDigitWrongPosition = chalk.blue("●") // right digit wrong position
+    private readonly rightDigitWrongPosition = chalk.blueBright("●") // right digit wrong position
 
-    private readonly rightDigitRightPosition = chalk.green("●") // right position
+    private readonly rightDigitRightPosition = chalk.greenBright("●") // right position
 
     private readonly wrongPosition = chalk.grey("●") // no match
 
