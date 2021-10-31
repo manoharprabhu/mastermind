@@ -66,6 +66,7 @@ async function setPINAndStartGame() {
         }
 
         board.addGuess(guess)
+        board.clearErrors()
     }
 
     function guessSuccess() {

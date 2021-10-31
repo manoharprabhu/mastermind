@@ -3,11 +3,11 @@ import { table } from 'table'
 
 export default class Board {
     private pin: string
-    private readonly rightDigitWrongPosition = chalk.green("●") // right digit wrong position
+    private readonly rightDigitWrongPosition = chalk.blue("●") // right digit wrong position
 
-    private readonly rightDigitRightPosition = chalk.red("●") // right position
+    private readonly rightDigitRightPosition = chalk.green("●") // right position
 
-    private readonly wrongPosition = chalk.white("●") // no match
+    private readonly wrongPosition = chalk.grey("●") // no match
 
     constructor(pin: string) {
         this.pin = pin
@@ -28,6 +28,10 @@ export default class Board {
 
     public addError(error: string) {
         this.errors.push(error)
+    }
+
+    public clearErrors() {
+        this.errors = []
     }
 
     public getBoard(): string {

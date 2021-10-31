@@ -70,6 +70,7 @@ function setPINAndStartGame() {
                 break;
             }
             board.addGuess(guess);
+            board.clearErrors();
         }
         function guessSuccess() {
             console.log(chalk_1.default.greenBright(`
