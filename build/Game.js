@@ -15,8 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
 const readline_1 = __importDefault(require("readline"));
 const Board_1 = __importDefault(require("./Board"));
-const analytics_1 = __importDefault(require("analytics"));
-const google_analytics_1 = __importDefault(require("@analytics/google-analytics"));
 class Game {
     constructor(totalGuesses) {
         this.fourDigitRegex = new RegExp("^[0-9]{4}$");
@@ -25,17 +23,8 @@ class Game {
             input: process.stdin,
             output: process.stdout
         });
-        this.analytics = (0, analytics_1.default)({
-            app: 'codecracker',
-            plugins: [
-                (0, google_analytics_1.default)({
-                    trackingId: 'G-WX58Z492DH'
-                })
-            ]
-        });
     }
     start() {
-        this.analytics.track("play");
         this.clearScreen();
         this.printIntroduction();
     }
@@ -89,7 +78,6 @@ class Game {
         });
     }
     guessSuccess(remainingGuesses) {
-        this.analytics.track("win");
         console.log(chalk_1.default.greenBright(`
 =================================================================
         You guessed the PIN correctly in ${this.totalGuesses - remainingGuesses} guesses
@@ -98,7 +86,6 @@ class Game {
         this.exitGame();
     }
     gameOver(pin) {
-        this.analytics.track("lose");
         console.log(chalk_1.default.red(`    
 ==========================================================================================================
         The correct PIN was ${chalk_1.default.green(pin)} 
