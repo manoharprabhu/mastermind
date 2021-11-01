@@ -5,6 +5,7 @@ import Board from './Board'
 export default class Game {
     private totalGuesses: number
     private readInterface: readline.Interface
+    private fourDigitRegex = new RegExp("^[0-9]{4}$")
     constructor(totalGuesses: number) {
         this.totalGuesses = totalGuesses
         this.readInterface = readline.createInterface({
@@ -20,20 +21,17 @@ export default class Game {
 
     private printIntroduction() {
         console.log(chalk.green(`
-        ██████  ██████  ██████  ███████  ██████ ██████   █████   ██████ ██   ██ ███████ ██████  
-        ██      ██    ██ ██   ██ ██      ██      ██   ██ ██   ██ ██      ██  ██  ██      ██   ██ 
-        ██      ██    ██ ██   ██ █████   ██      ██████  ███████ ██      █████   █████   ██████  
-        ██      ██    ██ ██   ██ ██      ██      ██   ██ ██   ██ ██      ██  ██  ██      ██   ██ 
-         ██████  ██████  ██████  ███████  ██████ ██   ██ ██   ██  ██████ ██   ██ ███████ ██   ██ 
+ ██████  ██████  ██████  ███████  ██████ ██████   █████   ██████ ██   ██ ███████ ██████  
+██      ██    ██ ██   ██ ██      ██      ██   ██ ██   ██ ██      ██  ██  ██      ██   ██ 
+██      ██    ██ ██   ██ █████   ██      ██████  ███████ ██      █████   █████   ██████  
+██      ██    ██ ██   ██ ██      ██      ██   ██ ██   ██ ██      ██  ██  ██      ██   ██ 
+ ██████  ██████  ██████  ███████  ██████ ██   ██ ██   ██  ██████ ██   ██ ███████ ██   ██ 
                                                                                                                                                                    
-        =========================================================================================
+=========================================================================================
     `))
-        console.log("\n")
-        console.log(chalk.greenBright("\tI have locked your phone with a 4 digit PIN"))
-        console.log(chalk.greenBright("\tAll the digits of the PIN are unique digits from 0 to 9"))
-        console.log(chalk.redBright("\n\t\t\t\tXXXX"))
-        console.log("\n")
-        this.readInterface.question(chalk.greenBright(`\nYou have ${this.totalGuesses} tries to guess the correct PIN. Press enter to start.`), () => {
+        console.log(chalk.greenBright(`I have locked your phone with a ${chalk.redBright("4 digit PIN")}`))
+        console.log(chalk.greenBright(`All the digits of the PIN are unique digits from ${chalk.redBright("0 to 9")}\n`))
+        this.readInterface.question(chalk.greenBright(`You have ${chalk.redBright(this.totalGuesses)} tries to guess the correct PIN. Press enter to start.\n`), () => {
             this.clearScreen()
             this.setPINAndStartGame()
         })
@@ -59,7 +57,7 @@ export default class Game {
                 continue
             }
 
-            if (!Number.isInteger(Number(guess))) {
+            if (!this.fourDigitRegex.test(guess)) {
                 board.addError(chalk.red(`Your guess has to be 4 digits: ${guess}`))
                 continue
             }
@@ -78,9 +76,9 @@ export default class Game {
     private guessSuccess(remainingGuesses: number) {
         console.log(chalk.greenBright(
             `
-    =================================================================
-            You guessed the PIN correctly in ${this.totalGuesses - remainingGuesses} guesses
-    =================================================================
+=================================================================
+        You guessed the PIN correctly in ${this.totalGuesses - remainingGuesses} guesses
+=================================================================
     `
         ))
         this.exitGame()
@@ -88,12 +86,11 @@ export default class Game {
 
     private gameOver(pin: string) {
         console.log(chalk.red(
-            `
-    
-    ==========================================================================================================
-            The correct PIN was ${chalk.green(pin)} 
-            You failed to guess the correct PIN in 10 guesses. Your phone shall remain locked forever.
-    ==========================================================================================================
+            `    
+==========================================================================================================
+        The correct PIN was ${chalk.green(pin)} 
+        You failed to guess the correct PIN in 10 guesses. Your phone shall remain locked forever.
+==========================================================================================================
     
             `
         )

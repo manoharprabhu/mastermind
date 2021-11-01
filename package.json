@@ -27,7 +27,10 @@
   "keywords": [
     "cli",
     "mastermind",
-    "codecracker"
+    "codecracker",
+    "game",
+    "guess",
+    "brainteaser"
   ],
   "preferGlobal": true,
   "repository": {

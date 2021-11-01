@@ -15,34 +15,43 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
 const readline_1 = __importDefault(require("readline"));
 const Board_1 = __importDefault(require("./Board"));
+const analytics_1 = __importDefault(require("analytics"));
+const google_analytics_1 = __importDefault(require("@analytics/google-analytics"));
 class Game {
     constructor(totalGuesses) {
+        this.fourDigitRegex = new RegExp("^[0-9]{4}$");
         this.totalGuesses = totalGuesses;
         this.readInterface = readline_1.default.createInterface({
             input: process.stdin,
             output: process.stdout
         });
+        this.analytics = (0, analytics_1.default)({
+            app: 'codecracker',
+            plugins: [
+                (0, google_analytics_1.default)({
+                    trackingId: 'G-WX58Z492DH'
+                })
+            ]
+        });
     }
     start() {
+        this.analytics.track("play");
         this.clearScreen();
         this.printIntroduction();
     }
     printIntroduction() {
         console.log(chalk_1.default.green(`
-        ██████  ██████  ██████  ███████  ██████ ██████   █████   ██████ ██   ██ ███████ ██████  
-        ██      ██    ██ ██   ██ ██      ██      ██   ██ ██   ██ ██      ██  ██  ██      ██   ██ 
-        ██      ██    ██ ██   ██ █████   ██      ██████  ███████ ██      █████   █████   ██████  
-        ██      ██    ██ ██   ██ ██      ██      ██   ██ ██   ██ ██      ██  ██  ██      ██   ██ 
-         ██████  ██████  ██████  ███████  ██████ ██   ██ ██   ██  ██████ ██   ██ ███████ ██   ██ 
+ ██████  ██████  ██████  ███████  ██████ ██████   █████   ██████ ██   ██ ███████ ██████  
+██      ██    ██ ██   ██ ██      ██      ██   ██ ██   ██ ██      ██  ██  ██      ██   ██ 
+██      ██    ██ ██   ██ █████   ██      ██████  ███████ ██      █████   █████   ██████  
+██      ██    ██ ██   ██ ██      ██      ██   ██ ██   ██ ██      ██  ██  ██      ██   ██ 
+ ██████  ██████  ██████  ███████  ██████ ██   ██ ██   ██  ██████ ██   ██ ███████ ██   ██ 
                                                                                                                                                                    
-        =========================================================================================
+=========================================================================================
     `));
-        console.log("\n");
-        console.log(chalk_1.default.greenBright("\tI have locked your phone with a 4 digit PIN"));
-        console.log(chalk_1.default.greenBright("\tAll the digits of the PIN are unique digits from 0 to 9"));
-        console.log(chalk_1.default.redBright("\n\t\t\t\tXXXX"));
-        console.log("\n");
-        this.readInterface.question(chalk_1.default.greenBright(`\nYou have ${this.totalGuesses} tries to guess the correct PIN. Press enter to start.`), () => {
+        console.log(chalk_1.default.greenBright(`I have locked your phone with a ${chalk_1.default.redBright("4 digit PIN")}`));
+        console.log(chalk_1.default.greenBright(`All the digits of the PIN are unique digits from ${chalk_1.default.redBright("0 to 9")}\n`));
+        this.readInterface.question(chalk_1.default.greenBright(`You have ${chalk_1.default.redBright(this.totalGuesses)} tries to guess the correct PIN. Press enter to start.\n`), () => {
             this.clearScreen();
             this.setPINAndStartGame();
         });
@@ -65,7 +74,7 @@ class Game {
                     board.addError(chalk_1.default.red(`Your guess has to be 4 digits: ${guess}`));
                     continue;
                 }
-                if (!Number.isInteger(Number(guess))) {
+                if (!this.fourDigitRegex.test(guess)) {
                     board.addError(chalk_1.default.red(`Your guess has to be 4 digits: ${guess}`));
                     continue;
                 }
@@ -80,20 +89,21 @@ class Game {
         });
     }
     guessSuccess(remainingGuesses) {
+        this.analytics.track("win");
         console.log(chalk_1.default.greenBright(`
-    =================================================================
-            You guessed the PIN correctly in ${this.totalGuesses - remainingGuesses} guesses
-    =================================================================
+=================================================================
+        You guessed the PIN correctly in ${this.totalGuesses - remainingGuesses} guesses
+=================================================================
     `));
         this.exitGame();
     }
     gameOver(pin) {
-        console.log(chalk_1.default.red(`
-    
-    ==========================================================================================================
-            The correct PIN was ${chalk_1.default.green(pin)} 
-            You failed to guess the correct PIN in 10 guesses. Your phone shall remain locked forever.
-    ==========================================================================================================
+        this.analytics.track("lose");
+        console.log(chalk_1.default.red(`    
+==========================================================================================================
+        The correct PIN was ${chalk_1.default.green(pin)} 
+        You failed to guess the correct PIN in 10 guesses. Your phone shall remain locked forever.
+==========================================================================================================
     
             `));
         this.exitGame();
