@@ -54,7 +54,8 @@ export default class Board {
                 dots += this.wrongPosition + " "
             }
 
-            row.push(dots.slice(0, 24) + "\n" + dots.slice(24))
+            // row.push(dots.slice(0, 24) + "\n" + dots.slice(24))
+            row.push(dots)
 
             result.push(row)
         })

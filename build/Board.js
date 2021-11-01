@@ -45,7 +45,8 @@ class Board {
             for (let i = 0; i < 4 - guessResult.correctPosition - guessResult.correctColor; i++) {
                 dots += this.wrongPosition + " ";
             }
-            row.push(dots.slice(0, 24) + "\n" + dots.slice(24));
+            // row.push(dots.slice(0, 24) + "\n" + dots.slice(24))
+            row.push(dots);
             result.push(row);
         });
         if (result.length === 0) {
