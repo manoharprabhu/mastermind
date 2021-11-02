@@ -85,7 +85,7 @@ class Game {
         this.exitGame();
     }
     gameOver(pin) {
-        this.printInBox(chalk_1.default.black.bgRedBright, `You failed. The correct PIN was ${chalk_1.default.black.underline.bold(pin)}`, -28);
+        this.printInBox(chalk_1.default.black.bgRedBright, `You failed. The correct PIN was ${chalk_1.default.black.bold(pin)}`, -28);
         this.exitGame();
     }
     printInBox(color, text, boxSizeAdjustment = 0) {

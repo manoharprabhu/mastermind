@@ -80,7 +80,7 @@ export default class Game {
     }
 
     private gameOver(pin: string) {
-        this.printInBox(chalk.black.bgRedBright, `You failed. The correct PIN was ${chalk.black.underline.bold(pin)}`, -28)
+        this.printInBox(chalk.black.bgRedBright, `You failed. The correct PIN was ${chalk.black.bold(pin)}`, -28)
         this.exitGame()
     }
 
