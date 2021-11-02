@@ -75,29 +75,45 @@ export default class Game {
     }
 
     private guessSuccess(remainingGuesses: number) {
-        console.log(chalk.greenBright(
-            `
-=================================================================
-        You guessed the PIN correctly in ${this.totalGuesses - remainingGuesses} guesses
-=================================================================
-    `
-        ))
+        this.printInBox(chalk.black.bgGreenBright, `You guessed the PIN correctly in ${this.totalGuesses - remainingGuesses} guesses`)
         this.exitGame()
     }
 
     private gameOver(pin: string) {
-        console.log(chalk.red(
-            `    
-==========================================================================================================
-        The correct PIN was ${chalk.green(pin)} 
-        You failed to guess the correct PIN in 10 guesses. Your phone shall remain locked forever.
-==========================================================================================================
-    
-            `
-        )
-        )
-
+        this.printInBox(chalk.black.bgRedBright, `You failed. The correct PIN was ${chalk.black.underline.bold(pin)}`, -28)
         this.exitGame()
+    }
+
+    private printInBox(color: chalk.Chalk, text: string, boxSizeAdjustment: number = 0) {
+        console.log()
+        const padding = 5
+        const boxWidth = text.length + padding + padding + boxSizeAdjustment
+        const boxHeight = 2
+        for(let i = 0; i < boxHeight / 2; i++) {
+            for(let k = 0; k < boxWidth; k++) {
+                process.stdout.write(color(' '))
+            }
+            console.log()
+        }
+        for(let i = 0; i < padding; i++) {
+            process.stdout.write(color(' '))
+        }
+
+        process.stdout.write(color(text))
+        
+        for(let i = 0; i < padding; i++) {
+            process.stdout.write(color(' '))
+        }
+        
+        console.log()
+
+        for(let i = 0; i < boxHeight / 2; i++) {
+            for(let k = 0; k < boxWidth; k++) {
+                process.stdout.write(color(' '))
+            }
+            console.log()
+        }
+        console.log()
     }
 
     private async flashScreen() {

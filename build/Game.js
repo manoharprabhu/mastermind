@@ -81,22 +81,39 @@ class Game {
         });
     }
     guessSuccess(remainingGuesses) {
-        console.log(chalk_1.default.greenBright(`
-=================================================================
-        You guessed the PIN correctly in ${this.totalGuesses - remainingGuesses} guesses
-=================================================================
-    `));
+        this.printInBox(chalk_1.default.black.bgGreenBright, `You guessed the PIN correctly in ${this.totalGuesses - remainingGuesses} guesses`);
         this.exitGame();
     }
     gameOver(pin) {
-        console.log(chalk_1.default.red(`    
-==========================================================================================================
-        The correct PIN was ${chalk_1.default.green(pin)} 
-        You failed to guess the correct PIN in 10 guesses. Your phone shall remain locked forever.
-==========================================================================================================
-    
-            `));
+        this.printInBox(chalk_1.default.black.bgRedBright, `You failed. The correct PIN was ${chalk_1.default.black.underline.bold(pin)}`, -28);
         this.exitGame();
+    }
+    printInBox(color, text, boxSizeAdjustment = 0) {
+        console.log();
+        const padding = 5;
+        const boxWidth = text.length + padding + padding + boxSizeAdjustment;
+        const boxHeight = 2;
+        for (let i = 0; i < boxHeight / 2; i++) {
+            for (let k = 0; k < boxWidth; k++) {
+                process.stdout.write(color(' '));
+            }
+            console.log();
+        }
+        for (let i = 0; i < padding; i++) {
+            process.stdout.write(color(' '));
+        }
+        process.stdout.write(color(text));
+        for (let i = 0; i < padding; i++) {
+            process.stdout.write(color(' '));
+        }
+        console.log();
+        for (let i = 0; i < boxHeight / 2; i++) {
+            for (let k = 0; k < boxWidth; k++) {
+                process.stdout.write(color(' '));
+            }
+            console.log();
+        }
+        console.log();
     }
     flashScreen() {
         return __awaiter(this, void 0, void 0, function* () {
