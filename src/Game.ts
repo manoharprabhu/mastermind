@@ -14,7 +14,8 @@ export default class Game {
         })
     }
 
-    public start() {
+    public async start() {
+        await this.flashScreen()
         this.clearScreen()
         this.printIntroduction()
     }
@@ -97,6 +98,22 @@ export default class Game {
         )
 
         this.exitGame()
+    }
+
+    private async flashScreen() {
+        await this.flashColor(chalk.green.bgGreen, 80)
+        await this.flashColor(chalk.black.bgBlack, 80)
+    }
+
+    private async flashColor(color: chalk.Chalk, duration: number): Promise<void> {
+        return new Promise((resolve) => {
+            const rows = process.stdout.rows || 24
+            const cols = process.stdout.columns || 80
+            for (let i = 0; i < rows * cols; i++) {
+                process.stdout.write(color(' '))
+            }
+            setTimeout(() => { resolve() }, duration)
+        })
     }
 
     private readGuess(): Promise<string> {

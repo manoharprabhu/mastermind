@@ -25,8 +25,11 @@ class Game {
         });
     }
     start() {
-        this.clearScreen();
-        this.printIntroduction();
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.flashScreen();
+            this.clearScreen();
+            this.printIntroduction();
+        });
     }
     printIntroduction() {
         console.log(chalk_1.default.green(`
@@ -94,6 +97,24 @@ class Game {
     
             `));
         this.exitGame();
+    }
+    flashScreen() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.flashColor(chalk_1.default.green.bgGreen, 80);
+            yield this.flashColor(chalk_1.default.black.bgBlack, 80);
+        });
+    }
+    flashColor(color, duration) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve) => {
+                const rows = process.stdout.rows || 24;
+                const cols = process.stdout.columns || 80;
+                for (let i = 0; i < rows * cols; i++) {
+                    process.stdout.write(color(' '));
+                }
+                setTimeout(() => { resolve(); }, duration);
+            });
+        });
     }
     readGuess() {
         return new Promise((resolve) => {
