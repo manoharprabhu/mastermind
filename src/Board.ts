@@ -3,9 +3,9 @@ import { table } from 'table'
 
 export default class Board {
     private pin: string
-    private readonly rightDigitWrongPosition = chalk.blueBright("●") // right digit wrong position
 
-    private readonly rightDigitRightPosition = chalk.greenBright("●") // right position
+    private readonly rightDigitWrongPosition = chalk.yellowBright("●") // right digit wrong position
+    private readonly rightDigitRightPosition = chalk.redBright("●") // right position
 
     private readonly wrongPosition = chalk.grey("●") // no match
 
@@ -14,9 +14,9 @@ export default class Board {
     }
     private header: string =
         `
-    ${this.rightDigitWrongPosition} - Correct guess, wrong position
-    ${this.rightDigitRightPosition} - Correct guess, correct position
-    ${this.wrongPosition} - Wrong guess
+${this.rightDigitRightPosition} - Number is in right position
+${this.rightDigitWrongPosition} - Number is in wrong position
+${this.wrongPosition} - Number is not in the PIN
     `
 
     private guesses: string[] = []
@@ -43,19 +43,20 @@ export default class Board {
 
             const guessResult = this.match(this.pin, guess)
             let dots: string = ""
-            for (let i = 0; i < guessResult.correctColor; i++) {
-                dots += this.rightDigitWrongPosition + " "
-            }
             for (let i = 0; i < guessResult.correctPosition; i++) {
                 dots += this.rightDigitRightPosition + " "
             }
 
+            for (let i = 0; i < guessResult.correctColor; i++) {
+                dots += this.rightDigitWrongPosition + " "
+            }
+            
             for (let i = 0; i < 4 - guessResult.correctPosition - guessResult.correctColor; i++) {
                 dots += this.wrongPosition + " "
             }
 
-            // row.push(dots.slice(0, 24) + "\n" + dots.slice(24))
-            row.push(dots)
+            row.push(dots.slice(0, 24) + "\n" + dots.slice(24))
+            // row.push(dots)
 
             result.push(row)
         })
@@ -75,7 +76,7 @@ export default class Board {
             },
             columns: {
                 4: {
-                    width: 20,
+                    width: 15,
                 }
             }
         })

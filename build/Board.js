@@ -7,13 +7,13 @@ const chalk_1 = __importDefault(require("chalk"));
 const table_1 = require("table");
 class Board {
     constructor(pin) {
-        this.rightDigitWrongPosition = chalk_1.default.blueBright("●"); // right digit wrong position
-        this.rightDigitRightPosition = chalk_1.default.greenBright("●"); // right position
+        this.rightDigitWrongPosition = chalk_1.default.yellowBright("●"); // right digit wrong position
+        this.rightDigitRightPosition = chalk_1.default.redBright("●"); // right position
         this.wrongPosition = chalk_1.default.grey("●"); // no match
         this.header = `
-    ${this.rightDigitWrongPosition} - Correct guess, wrong position
-    ${this.rightDigitRightPosition} - Correct guess, correct position
-    ${this.wrongPosition} - Wrong guess
+${this.rightDigitRightPosition} - Number is in right position
+${this.rightDigitWrongPosition} - Number is in wrong position
+${this.wrongPosition} - Number is not in the PIN
     `;
         this.guesses = [];
         this.errors = [];
@@ -36,17 +36,17 @@ class Board {
             row.push(...digits);
             const guessResult = this.match(this.pin, guess);
             let dots = "";
-            for (let i = 0; i < guessResult.correctColor; i++) {
-                dots += this.rightDigitWrongPosition + " ";
-            }
             for (let i = 0; i < guessResult.correctPosition; i++) {
                 dots += this.rightDigitRightPosition + " ";
+            }
+            for (let i = 0; i < guessResult.correctColor; i++) {
+                dots += this.rightDigitWrongPosition + " ";
             }
             for (let i = 0; i < 4 - guessResult.correctPosition - guessResult.correctColor; i++) {
                 dots += this.wrongPosition + " ";
             }
-            // row.push(dots.slice(0, 24) + "\n" + dots.slice(24))
-            row.push(dots);
+            row.push(dots.slice(0, 24) + "\n" + dots.slice(24));
+            // row.push(dots)
             result.push(row);
         });
         if (result.length === 0) {
@@ -64,7 +64,7 @@ class Board {
             },
             columns: {
                 4: {
-                    width: 20,
+                    width: 15,
                 }
             }
         });
