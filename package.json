@@ -1,6 +1,6 @@
 {
   "name": "codecracker",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "CLI codecracker game",
   "scripts": {
     "build": "gulp",
